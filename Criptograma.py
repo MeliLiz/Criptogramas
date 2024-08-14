@@ -8,6 +8,7 @@ def count_letters(text):
                 letters[letter] += 1
             else:
                 letters[letter] = 1
+    print(letters)
     return letters
 
 # Function to sort the letters by the number of times they appear
@@ -20,6 +21,7 @@ def sort_letters(text):
 # Function to get the sustitutions of the letters in the criptograma in a dictionary
 def get_sustitutions(criptograma, freq_ordered_letters):
     letters = sort_letters(criptograma) # Letters in the criptograma ordered by the number of times they appear
+    print(letters)
     sustitution = {}
     for i in range(len(letters)):
         sustitution[letters[i]] = freq_ordered_letters[i]
@@ -49,6 +51,9 @@ def caesar_cipher(text, n):
             new_text.append(text[i])
             
     return "".join(new_text)
+
+def caesar_decipher(text, n):
+    return caesar_cipher(text, -n)
     
 
 if __name__ == "__main__":
@@ -56,8 +61,11 @@ if __name__ == "__main__":
     with open("criptograma_1.txt", "r") as file:
         criptograma = file.read()
     
-    """freq_ordered_letters = ['e', 'a', 'o', 's', 'r', 'n', 'i', 'd', 'l', 'c', 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k', 'w']
+    print(criptograma)
     
-    print(sustitute_text(criptograma.lower(), freq_ordered_letters))"""
+    """freq_ordered_letters_1 = ['e', 'a', 'o', 's', 'r', 'n', 'i', 'd', 'l', 'c', 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k', 'w']
+    freq_ordered_letters_2 = ['e', 'a', 'o', 's', 'r', 'n', 'i', 'd', 'l', 'c', 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k', 'w']
+
+    print(sustitute_text(criptograma.lower(), freq_ordered_letters_2))"""
     
-    caesar_cipher()
+    print(caesar_decipher(criptograma.lower(), 25))
