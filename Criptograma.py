@@ -61,11 +61,11 @@ if __name__ == "__main__":
     with open("criptograma_1.txt", "r") as file:
         criptograma = file.read()
     
-    print(criptograma)
+    #print(criptograma)
     
-    """freq_ordered_letters_1 = ['e', 'a', 'o', 's', 'r', 'n', 'i', 'd', 'l', 'c', 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k', 'w']
-    freq_ordered_letters_2 = ['e', 'a', 'o', 's', 'r', 'n', 'i', 'd', 'l', 'c', 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k', 'w']
+    freq_ordered_letters_1 = ['e', 'a', 'o', 's', 'r', 'n', 'i', 'd', 'l', 'c', 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k', 'w']
+    freq_ordered_letters_2 = ['a', 's', 'e', 'o', 'i', 'n', 'r', 'l', 'c', 't', 'd', 'u', 'm', 'p', 'b', 'g', 'h', 'v', 'q', 'y', 'f', 'z', 'j', 'x', 'k', 'w']
 
-    print(sustitute_text(criptograma.lower(), freq_ordered_letters_2))"""
+    print(sustitute_text(criptograma.lower(), freq_ordered_letters_2))
     
-    print(caesar_decipher(criptograma.lower(), 25))
+#print(caesar_decipher(criptograma.lower(), 25))
