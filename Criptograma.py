@@ -64,7 +64,7 @@ if __name__ == "__main__":
     #print(criptograma)
     
     freq_ordered_letters_1 = ['e', 'a', 'o', 's', 'r', 'n', 'i', 'd', 'l', 'c', 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k', 'w']
-    freq_ordered_letters_2 = ['a', 's', 'e', 'o', 'i', 'n', 'r', 'l', 'c', 't', 'd', 'u', 'm', 'p', 'b', 'g', 'h', 'v', 'q', 'y', 'f', 'z', 'j', 'x', 'k', 'w']
+    freq_ordered_letters_2 = ['a', 's', 'e', 'o', 'i', 'n', 'r', 'l', 'c', 't', 'd', 'm', 'u', 'p', 'y', 'v', 'h', 'f', 'b', 'g', 'q', 'z', 'j', 'x', 'k', 'w']
 
     print(sustitute_text(criptograma.lower(), freq_ordered_letters_2))
     
