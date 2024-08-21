@@ -1,16 +1,19 @@
 import re
 
+def remove_accents(text):
+    accents = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u'}
+    for char in text:
+        if char in accents:
+            text = text.replace(char, accents[char])
+    return text
+
 def clean_text(text):
-    # Remove all punctuation
-    text = re.sub(r'[^\w\s]', '', text)
-    # Remove the scores and underscores
-    text = re.sub(r'[-_]', '', text)
-    # Remove all digits
-    text = re.sub(r'\d', '', text)
-    # Remove all extra spaces
-    text = re.sub(r'\s+', '', text)
-    # Convert to lowercase
+    # Remove the special characters
+    text = re.sub(r"[^a-zA-Z]", "", text)
+    # Convert the text to lowercase
     text = text.lower()
+    # Remove the accents
+    text = remove_accents(text)
     return text
 
 def count_characters(text):
@@ -33,10 +36,10 @@ def coincidence_index(text):
     dict_ = count_characters(text)
     # Calculate the coincidence index
     count = 0
-    for char in freq:
+    for char in dict_:
         count += dict_[char] * (dict_[char] - 1)
     count /= n * (n - 1)
-    return index
+    return count
 
 """# Test the function
 text = "Hello, World!"
@@ -45,5 +48,8 @@ text = "The quick brown fox jumps over the lazy dog."
 print(coincidence_index(text))  # 0.05555555555555555"""
 
 if __name__ == "__main__":
-    
-    print(clean_text("Hello, World!"))
+    # Read the text from the file
+    with open("texto.txt", "r", encoding='latin-1') as file:
+        text = file.read()
+
+    print(coincidence_index(text))
