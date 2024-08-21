@@ -41,11 +41,6 @@ def coincidence_index(text):
     count /= n * (n - 1)
     return count
 
-"""# Test the function
-text = "Hello, World!"
-print(coincidence_index(text))  # 0.1111111111111111
-text = "The quick brown fox jumps over the lazy dog."
-print(coincidence_index(text))  # 0.05555555555555555"""
 
 if __name__ == "__main__":
     # Read the text from the file
