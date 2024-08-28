@@ -138,6 +138,17 @@ def get_sorted_letters_of_every_alphabet(separated_text):
         sorted_letters.append(sort_letters(alphabet))
     return sorted_letters
 
+# Get the key letter if we have the vigenere encrypted letter and the proposed actual letter
+def get_key_letter(vigenere_letter, actual_letter):
+    freq_ordered_letters = ['e', 'a', 'o', 's', 'r', 'n', 'i', 'd', 'l', 't', 'u', 'c', 'm', 'p', 'v', 'g', 'b', 'q', 'f', 'h', 'z', 'j', 'x', 'y', 'k', 'w']
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    vigenere_index = alphabet.index(vigenere_letter) # Index of the vigenere letter
+    actual_index = alphabet.index(actual_letter) # Index of the actual letter
+    key_index = (vigenere_index - actual_index) % 26 # Index of the key letter
+    return alphabet[key_index]
+
+
+
 def vigenere_table():
     table = []
     alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
@@ -152,8 +163,6 @@ if __name__ == "__main__":
     with open("criptograma_2.txt", "r", encoding='latin-1') as file:
         text = file.read()
 
-    vigenere_table()
-
     text = clean_text(text)
     #print(coincidence_index(text))
     #distances = kasiski_test(text)
@@ -163,4 +172,5 @@ if __name__ == "__main__":
     #print(separated_text)
     sorted_alphabets_letters= get_sorted_letters_of_every_alphabet(separated_text)
     #print(sorted_alphabets_letters)
+    print(get_key_letter("y", "e"))
     
