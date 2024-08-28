@@ -150,7 +150,7 @@ def get_key_letter(vigenere_letter, actual_letter):
 def get_key(sorted_letters):
     key = []
     for i in range(len(sorted_letters)):
-        key.append(get_key_letter(sorted_letters[i][0], "t"))
+        key.append(get_key_letter(sorted_letters[i][0], "e"))
     return key
 
 def vigenere_decypher(text, key):
@@ -186,7 +186,9 @@ if __name__ == "__main__":
 
     text = clean_text(text)
     #print(coincidence_index(text))
-    #distances = kasiski_test(text)
+    #print(repeated_substrings(text))
+    distances = kasiski_test(text)
+    #print(distances)
     #print(factors(distances))
     #print(find_key_length(factors(distances)))
     separated_text = separate_text(text, 10)
@@ -194,5 +196,6 @@ if __name__ == "__main__":
     sorted_alphabets_letters= get_sorted_letters_of_every_alphabet(separated_text)
     #print(sorted_alphabets_letters)
     #print(get_key(sorted_alphabets_letters))
+    #print(vigenere_decypher(text, ['s','u', 'c','i','t','a','n','t','e','s']))
     print(vigenere_decypher(text, ['s','u', 'n','t','z','a','r','t','e','g']))
     
