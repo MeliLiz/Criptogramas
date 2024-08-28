@@ -77,6 +77,25 @@ def kasiski_test(text):
             else:
                 distances[diff] = 1
     return dict(sorted(distances.items(), key=lambda item: item[1], reverse=True))
+
+def prime_factors(n):
+    i = 2
+    factors = []
+    while i * i <= n: # Iterate until the square root of n
+        if n % i: # If n is divisible by i
+            i += 1
+        else:
+            n //= i # Divide n by i
+            factors.append(i)
+    if n > 1:
+        factors.append(n)
+    return factors
+
+def factors(distances):
+    factors = {}
+    for distance in distances:
+        factors[distance] = prime_factors(distance)
+    return factors
     
 
 
@@ -87,4 +106,5 @@ if __name__ == "__main__":
 
     #print(coincidence_index(text))
     #print(repeated_substrings(text))
-    print(kasiski_test(text))
+    distances = kasiski_test(text)
+    print(factors(distances))
