@@ -147,6 +147,12 @@ def get_key_letter(vigenere_letter, actual_letter):
     key_index = (vigenere_index - actual_index) % 26 # Index of the key letter
     return alphabet[key_index]
 
+def get_key(sorted_letters):
+    key = []
+    for i in range(len(sorted_letters)):
+        key.append(get_key_letter(sorted_letters[i][0], "e"))
+    return key
+
 
 
 def vigenere_table():
@@ -172,5 +178,5 @@ if __name__ == "__main__":
     #print(separated_text)
     sorted_alphabets_letters= get_sorted_letters_of_every_alphabet(separated_text)
     #print(sorted_alphabets_letters)
-    print(get_key_letter("y", "e"))
+    print(get_key(sorted_alphabets_letters))
     
