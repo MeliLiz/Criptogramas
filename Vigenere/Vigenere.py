@@ -78,6 +78,7 @@ def kasiski_test(text):
                 distances[diff] = 1
     return dict(sorted(distances.items(), key=lambda item: item[1], reverse=True))
 
+# Function to find the prime factors of a number
 def prime_factors(n):
     i = 2
     factors = []
@@ -91,12 +92,66 @@ def prime_factors(n):
         factors.append(n)
     return factors
 
+# Function to find the factors of the distances
 def factors(distances):
     factors = {}
     for distance in distances:
         factors[distance] = prime_factors(distance)
     return factors
+
+# Function to show the factors of the distances
+def find_key_length(factors):
+    for factor in factors:
+        print(f"Factor: {factor}")
+        print(f"Prime factors: {factors[factor]}")
+        print()
     
+# Function to separate the text into n parts, letters separated by the key length
+def separate_text(text, key_length):
+    separated_text = []
+    for i in range(key_length):
+        separated_text.append(text[i::key_length]) # Append the characters separated by the key length
+    return separated_text
+
+
+#Function to count the number of letters in a text
+def count_letters(text):
+    letters = {}
+    for letter in text:
+        if letter.isalpha():
+            if letter in letters:
+                letters[letter] += 1
+            else:
+                letters[letter] = 1
+    return letters
+
+# Function to sort the letters by the number of times they appear
+def sort_letters(text):
+    counts = count_letters(text)
+    def get_count(letter):
+        return counts[letter]
+    return sorted(counts.keys(), key=get_count, reverse=True)
+
+# Function to get the sustitutions of the letters in the criptograma in a dictionary
+def get_sustitutions(criptograma, freq_ordered_letters):
+    letters = sort_letters(criptograma) # Letters in the criptograma ordered by the number of times they appear
+    print(letters)
+    sustitution = {}
+    for i in range(len(letters)):
+        sustitution[letters[i]] = freq_ordered_letters[i]
+    return sustitution
+
+# Function to sustitute the letters in the text
+# Order_freq_letters is a list with the letters ordered by the number of times they tend to appear in a text
+def sustitute_text(text, order_freq_letters):
+    sustitutions = get_sustitutions(text, order_freq_letters)
+    new_text = []
+    for letter in text:
+        if letter.isalpha():
+            new_text.append(sustitutions[letter])
+        else:
+            new_text.append(letter)
+    return "".join(new_text)
 
 
 if __name__ == "__main__":
@@ -104,7 +159,13 @@ if __name__ == "__main__":
     with open("criptograma_2.txt", "r", encoding='latin-1') as file:
         text = file.read()
 
+    text = clean_text(text)
     #print(coincidence_index(text))
     #print(repeated_substrings(text))
-    distances = kasiski_test(text)
-    print(factors(distances))
+   # distances = kasiski_test(text)
+    #print(factors(distances))
+    #print(find_key_length(factors(distances)))
+    separated_text = separate_text(text, 10)
+    print(separated_text)
+    for alphabet in separated_text:
+        print(sort_letters(alphabet))
