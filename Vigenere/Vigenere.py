@@ -150,8 +150,23 @@ def get_key_letter(vigenere_letter, actual_letter):
 def get_key(sorted_letters):
     key = []
     for i in range(len(sorted_letters)):
-        key.append(get_key_letter(sorted_letters[i][0], "f"))
+        key.append(get_key_letter(sorted_letters[i][0], "t"))
     return key
+
+def vigenere_decypher(text, key):
+    table = vigenere_table()
+    decyphered_text = ""
+    key_length = len(key)
+    key_index = 0
+    for letter in text:
+        if letter.isalpha():
+            row = table[0].index(key[key_index])
+            column = table[row].index(letter)
+            decyphered_text += table[0][column]
+            key_index = (key_index + 1) % key_length
+        else:
+            decyphered_text += letter
+    return decyphered_text
 
 
 
@@ -178,5 +193,6 @@ if __name__ == "__main__":
     #print(separated_text)
     sorted_alphabets_letters= get_sorted_letters_of_every_alphabet(separated_text)
     #print(sorted_alphabets_letters)
-    print(get_key(sorted_alphabets_letters))
+    #print(get_key(sorted_alphabets_letters))
+    print(vigenere_decypher(text, ['s','u', 'n','t','z','a','r','t','e','g']))
     
