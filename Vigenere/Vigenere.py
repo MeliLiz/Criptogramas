@@ -140,7 +140,7 @@ def get_sorted_letters_of_every_alphabet(separated_text):
 
 # Get the key letter if we have the vigenere encrypted letter and the proposed actual letter
 def get_key_letter(vigenere_letter, actual_letter):
-    freq_ordered_letters = ['e', 'a', 'o', 's', 'r', 'n', 'i', 'd', 'l', 't', 'u', 'c', 'm', 'p', 'v', 'g', 'b', 'q', 'f', 'h', 'z', 'j', 'x', 'y', 'k', 'w']
+    #freq_ordered_letters = ['e', 'a', 'o', 's', 'r', 'n', 'i', 'd', 'l', 't', 'u', 'c', 'm', 'p', 'v', 'g', 'b', 'q', 'f', 'h', 'z', 'j', 'x', 'y', 'k', 'w']
     alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
     vigenere_index = alphabet.index(vigenere_letter) # Index of the vigenere letter
     actual_index = alphabet.index(actual_letter) # Index of the actual letter
@@ -150,7 +150,7 @@ def get_key_letter(vigenere_letter, actual_letter):
 def get_key(sorted_letters):
     key = []
     for i in range(len(sorted_letters)):
-        key.append(get_key_letter(sorted_letters[i][0], "e"))
+        key.append(get_key_letter(sorted_letters[i][0], "a"))
     return key
 
 
