@@ -138,12 +138,21 @@ def get_sorted_letters_of_every_alphabet(separated_text):
         sorted_letters.append(sort_letters(alphabet))
     return sorted_letters
 
+def vigenere_table():
+    table = []
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    for i in range(26):
+        table.append(alphabet[i:] + alphabet[:i])
+    return table
+
 
 
 if __name__ == "__main__":
     # Read the text from the file
     with open("criptograma_2.txt", "r", encoding='latin-1') as file:
         text = file.read()
+
+    vigenere_table()
 
     text = clean_text(text)
     #print(coincidence_index(text))
@@ -153,4 +162,5 @@ if __name__ == "__main__":
     separated_text = separate_text(text, 10)
     #print(separated_text)
     sorted_alphabets_letters= get_sorted_letters_of_every_alphabet(separated_text)
-    print(sorted_alphabets_letters)
+    #print(sorted_alphabets_letters)
+    
