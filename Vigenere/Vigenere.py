@@ -62,32 +62,21 @@ def repeated_substrings(text):
     repeated_substrings = dict(sorted(repeated_substrings.items(), key=lambda item: len(item[0]), reverse=True))
     return repeated_substrings
 
-# Function to find the separation betweeen the repeated substrings
-"""def kasiski_test(text):
-    repeated_subs = repeated_substrings(text)
-    # Find the separation between the repeated substrings
+# Function to find the difference between the positions of the repeated substrings
+def kasiski_test(text):
+    # Find the repeated substrings
+    repeated = repeated_substrings(text)
+    # Find the difference between the positions of the repeated substrings
     distances = {}
-    for substring in repeated_subs:
-        positions = [m.start() for m in re.finditer(f"(?={re.escape(substring)})", text)]
-        
-        if len(positions) > 1:
-            substring_distances = []
-            for i in range(len(positions) - 1):
-                distance = positions[i+1] - positions[i]
-                substring_distances.append(distance)
-            distances[substring] = substring_distances
-
-    # Step 3: Find the greatest common divisor (GCD) of all distances
-    gcds = []
-    for substring, dist_list in distances.items():
-        if len(dist_list) > 1:
-            gcds.append(reduce(gcd, dist_list))
-
-    # Step 4: Determine possible key lengths by looking at the most common GCDs
-    possible_key_lengths = list(set(gcds))
-    possible_key_lengths.sort()
-    
-    return possible_key_lengths, distances"""
+    for substring in repeated:
+        positions = repeated[substring][1]
+        for i in range(len(positions)-1): # Iterate over the positions of the substring
+            diff = positions[i+1] - positions[i]
+            if diff in distances:
+                distances[diff] += 1
+            else:
+                distances[diff] = 1
+    return dict(sorted(distances.items(), key=lambda item: item[1], reverse=True))
     
 
 
@@ -97,5 +86,5 @@ if __name__ == "__main__":
         text = file.read()
 
     #print(coincidence_index(text))
-    print(repeated_substrings(text))
-    #print(kasiski_test(text))
+    #print(repeated_substrings(text))
+    print(kasiski_test(text))
