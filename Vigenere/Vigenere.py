@@ -132,26 +132,12 @@ def sort_letters(text):
         return counts[letter]
     return sorted(counts.keys(), key=get_count, reverse=True)
 
-# Function to get the sustitutions of the letters in the criptograma in a dictionary
-def get_sustitutions(criptograma, freq_ordered_letters):
-    letters = sort_letters(criptograma) # Letters in the criptograma ordered by the number of times they appear
-    print(letters)
-    sustitution = {}
-    for i in range(len(letters)):
-        sustitution[letters[i]] = freq_ordered_letters[i]
-    return sustitution
+def get_sorted_letters_of_every_alphabet(separated_text):
+    sorted_letters = []
+    for alphabet in separated_text:
+        sorted_letters.append(sort_letters(alphabet))
+    return sorted_letters
 
-# Function to sustitute the letters in the text
-# Order_freq_letters is a list with the letters ordered by the number of times they tend to appear in a text
-def sustitute_text(text, order_freq_letters):
-    sustitutions = get_sustitutions(text, order_freq_letters)
-    new_text = []
-    for letter in text:
-        if letter.isalpha():
-            new_text.append(sustitutions[letter])
-        else:
-            new_text.append(letter)
-    return "".join(new_text)
 
 
 if __name__ == "__main__":
@@ -161,11 +147,10 @@ if __name__ == "__main__":
 
     text = clean_text(text)
     #print(coincidence_index(text))
-    #print(repeated_substrings(text))
-   # distances = kasiski_test(text)
+    #distances = kasiski_test(text)
     #print(factors(distances))
     #print(find_key_length(factors(distances)))
     separated_text = separate_text(text, 10)
-    print(separated_text)
-    for alphabet in separated_text:
-        print(sort_letters(alphabet))
+    #print(separated_text)
+    sorted_alphabets_letters= get_sorted_letters_of_every_alphabet(separated_text)
+    print(sorted_alphabets_letters)
