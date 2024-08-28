@@ -150,7 +150,7 @@ def get_key_letter(vigenere_letter, actual_letter):
 def get_key(sorted_letters):
     key = []
     for i in range(len(sorted_letters)):
-        key.append(get_key_letter(sorted_letters[i][0], "a"))
+        key.append(get_key_letter(sorted_letters[i][0], "f"))
     return key
 
 
