@@ -47,11 +47,6 @@ def encrypt_hill(text, key, n): # The text should be cleaned and lowercase, the 
     
     return cipher_text
 
-# Example usage
-text = "hola"  # Input text
-key = [6, 24, 1, 13, 16, 10, 20, 17, 15]  # Example 3x3 key matrix
-n = 3  # Size of the key matrix
-
 print(encrypt_hill(text, key, n))  # Output should be the encrypted text
 
 
