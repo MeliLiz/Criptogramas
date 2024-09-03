@@ -10,6 +10,19 @@ def encrypt_affine(text, a, b): # The text should be cleaned and lowercase
         cipher_text += chr(start + new_pos)
     return cipher_text
 
+#Affine cipher using a 27 character alphabet using yhe ñ character
+def encrypt_affine_27(text, a, b): # The text should be cleaned and lowercase
+    cipher_text = ""
+    for char in text:
+        start = ord("a")
+        pos = ord(char) - start
+        new_pos = (a * pos + b) % 27 # get the new position of the char in the alphabet considering the ñ character
+        if new_pos == 26: # if the new position is 26, the character is ñ
+            cipher_text += "ñ"
+        else:
+            cipher_text += chr(start + new_pos)
+    return cipher_text
+
 
 def remove_accents(text):
     accents = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u'}
@@ -34,3 +47,5 @@ if __name__ == "__main__":
 
     text = clean_text(text)
     print("Original\n", text, "\n")
+    print("Affine\n", encrypt_affine(text, 5, 7), "\n")
+    print("Affine 27\n", encrypt_affine_27(text, 5, 7), "\n")
