@@ -74,4 +74,4 @@ if __name__ == "__main__":
     text = clean_text(text)
 
     print("Original\n", text, "\n")
-    print("Hill\n", encrypt_hill(text, [3, 4, 2, 5], 2), "\n")
+    print("Hill\n", encrypt_hill(text, [3, 4, 2, 5], 2), "\n") # The matrix is invertible mod 27 because gcd(det(matrix), 27) = 1
