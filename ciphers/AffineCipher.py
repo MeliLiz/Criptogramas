@@ -47,5 +47,5 @@ if __name__ == "__main__":
 
     text = clean_text(text)
     print("Original\n", text, "\n")
-    print("Affine\n", encrypt_affine(text, 5, 7), "\n")
+    # print("Affine\n", encrypt_affine(text, 5, 7), "\n")
     print("Affine 27\n", encrypt_affine_27(text, 5, 7), "\n")
