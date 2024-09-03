@@ -47,8 +47,6 @@ def encrypt_hill(text, key, n): # The text should be cleaned and lowercase, the 
     
     return cipher_text
 
-print(encrypt_hill(text, key, n))  # Output should be the encrypted text
-
 
 def remove_accents(text):
     accents = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u'}
