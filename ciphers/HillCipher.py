@@ -29,12 +29,15 @@ def encrypt_hill(text, key, n): # The text should be cleaned and lowercase, the 
     
     # Mulriply the key matrix by the text matrix
     ciphered_lists = [] 
-    for list in text_lists:
-        cipher_row = []
-        for row in key_matrix:
-            cipher_char = sum(row[j] * list[j] for j in range(n)) % 27 # Get the new character position
-            cipher_row.append(cipher_char) 
-        ciphered_lists.append(cipher_row)
+    for list in text_lists: # For each list of n characters
+        cipher_list = []
+        for i in range(n): # For each row of the key matrix
+            sum = 0
+            for j in range(n): # For each num of character of the substring
+                sum += list[j] * key_matrix[j][i]
+            cipher_list.append(sum % 27)
+            #print(cipher_list)
+        ciphered_lists.append(cipher_list)
     
     #Get the ciphered text
     cipher_text = ""
