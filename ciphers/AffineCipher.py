@@ -34,7 +34,7 @@ def remove_accents(text):
 
 def clean_text(text):
     # Remove the special characters
-    text = re.sub(r"[^a-zA-Z]", "", text)
+    text = re.sub(r"[^a-zA-ZñÑ]", "", text)
     # Convert the text to lowercase
     text = text.lower()
     # Remove the accents
@@ -45,7 +45,7 @@ def clean_text(text):
 
 if __name__ == "__main__":
      # Read the text from the file
-    with open("Texto1.txt", "r", encoding='latin-1') as file: 
+    with open("Texto1.txt", "r", encoding='utf') as file: 
         text = file.read()
 
     text = clean_text(text)
