@@ -47,6 +47,7 @@ def encrypt_hill(text, key, n): # The text should be cleaned and lowercase, the 
     
     return cipher_text
 
+##### Clean text ############################
 
 def remove_accents(text):
     accents = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u'}
@@ -63,6 +64,8 @@ def clean_text(text):
     # Remove the accents
     text = remove_accents(text)
     return text
+
+#############################################
 
 if __name__ == "__main__":
      # Read the text from the file
