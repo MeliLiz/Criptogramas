@@ -1,20 +1,21 @@
 import re
 
 # Vigenere cipher
-def encrypt_vigenere(text, key):
+def encrypt_vigenere(text, key): # The text should be cleaned and lowercase
     key = key.lower()
     length_key = len(key)
     length_text = len(text)
     key = key * (length_text // length_key) + key[:length_text % length_key] # The key is repeated to the length of the text
     cipher_text = ""
     for i in range(length_text):
-        if text[i].isalpha():
-            if text[i].islower():
-                cipher_text += chr((ord(text[i]) - ord('a') + ord(key[i]) - ord('a')) % 26 + ord('a')) 
-            else:
-                cipher_text += chr((ord(text[i]) - ord('A') + ord(key[i]) - ord('a')) % 26 + ord('A'))
-        else:
-            cipher_text += text[i]
+        char_text = text[i]
+        char_key = key[i]
+        start = ord("a") #get the ASCII value of 'a'
+        pos_alph= ord(char_text) - start # get the position of the text char in the alphabet
+        pos_key = ord(char_key) - start # get the position of the key char in the alphabet
+        new_pos = (pos_alph + pos_key) % 26 # get the new position of the char in the alphabet
+        cipher_text += chr(start + new_pos) # get the new char
+        #cipher_text += chr((ord(char_text) + ord(char_key) - 2 * start) % 26 + start)
     return cipher_text
 
 
@@ -50,5 +51,6 @@ if __name__ == "__main__":
         text = file.read()
 
     text = clean_text(text)
-    print(text)
+    print("Original\n", text, "\n")
+    print("Encrypted\n", encrypt_vigenere(text, "criptografia"), "\n")
     #print(encrypt_vigenere(text, "criptografia"))
