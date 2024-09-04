@@ -15,9 +15,10 @@ def encrypt_vigenere(text, key): # The text should be cleaned and lowercase
         pos_key = ord(char_key) - start # get the position of the key char in the alphabet
         new_pos = (pos_alph + pos_key) % 26 # get the new position of the char in the alphabet
         cipher_text += chr(start + new_pos) # get the new char
-        #cipher_text += chr((ord(char_text) + ord(char_key) - 2 * start) % 26 + start)
     return cipher_text
 
+
+############## Clean text ############################
 
 def remove_accents(text):
     accents = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u'}
@@ -35,6 +36,8 @@ def clean_text(text):
     text = remove_accents(text)
     return text
 
+######################################################
+
 def count_characters(text):
     # Count the frequency of each character
     dict_ = {}
@@ -45,12 +48,31 @@ def count_characters(text):
             dict_[char] = 1
     return dict_
 
+
+def coincidence_index(text):
+    # Clean the text
+    text = clean_text(text)
+    # Count the number of characters
+    n = len(text)
+    # Count the frequency of each character
+    dict_ = count_characters(text)
+    # Calculate the coincidence index
+    count = 0
+    for char in dict_:
+        count += dict_[char] * (dict_[char] - 1)
+    count /= n * (n - 1)
+    return count
+
+
 if __name__ == "__main__":
     # Read the text from the file
     with open("AlquimistaReduced.txt", "r", encoding='latin-1') as file: # AlquimistaReduced.txt has 1670 characters cleaned
         text = file.read()
 
     text = clean_text(text)
+    inp = input("Enter the key: ")
     print("Original\n", text, "\n")
-    print("Encrypted\n", encrypt_vigenere(text, "criptografia"), "\n")
-    #print(encrypt_vigenere(text, "criptografia"))
+    # print("Encrypted\n", encrypt_vigenere(text, "criptografia"), "\n")
+    encrypted = encrypt_vigenere(text, inp)
+    print("Encrypted\n", encrypted, "\n")
+    print("Coincidence index: ", coincidence_index(encrypted))

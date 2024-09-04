@@ -12,7 +12,8 @@ def playfair(text, key):
         cipher_text += cipher(pair, letters)
     return cipher_text
 
-#Function to create the alphabet matrix using the key, the key is used to fill the matrix and then the rest of the alphabet is added
+#Function to create the alphabet matrix using the key, the key is used to fill the matrix and then 
+# the rest of the alphabet is added
 def alph_matrix(key):
     # Create the matrix 5x5, represented as a list
     alph_matrix = []
@@ -98,7 +99,7 @@ def clean_text(text):
     text = text.lower()
     # Remove the special characters
     text = re.sub(r"[^a-zñáéíóú]", "", text)
-    print(text)
+    #print(text)
     
     # Remove the accents
     text = remove_accents(text)
@@ -115,6 +116,6 @@ if __name__ == "__main__":
     text = clean_text(text)
     #matrix = alph_matrix("criptografia")
     print("Original\n", text, "\n")
-    print(pairs(text))
-    print(pairs("hello"))
-    print("Encrypted\n", playfair(text, "criptografia"), "\n")
+    #print(pairs(text))
+    #print(pairs("hello"))
+    print("Encrypted\n", playfair(text, "cripto"), "\n")
