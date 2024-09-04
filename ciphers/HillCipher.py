@@ -60,10 +60,12 @@ def remove_accents(text):
     return text
 
 def clean_text(text):
-    # Remove the special characters, but keep the ñ
-    text = re.sub(r"[^a-zA-ZÑñ]", "", text)
     # Convert the text to lowercase
     text = text.lower()
+    # Remove the special characters
+    text = re.sub(r"[^a-zñáéíóú]", "", text)
+    print(text)
+    
     # Remove the accents
     text = remove_accents(text)
     return text

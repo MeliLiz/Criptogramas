@@ -3,68 +3,81 @@ import re
 # Function to cipher using Playfair, the text should be cleaned and lowercase
 def playfair(text, key):
     # Create the matrix
-    matrix = alph_matrix(key)
-    # Add x to the text if needed
-    text = add_x(text)
-    # Create the pairs
-    pairs = create_pairs(text)
+    letters = alph_matrix(key)
+    pairs_ = pairs(text)
+
     # Get the ciphered text
     cipher_text = ""
-    for pair in pairs:
-        cipher_text += cipher_pair(pair, matrix)
+    for pair in pairs_:
+        cipher_text += cipher(pair, letters)
     return cipher_text
 
 #Function to create the alphabet matrix using the key, the key is used to fill the matrix and then the rest of the alphabet is added
 def alph_matrix(key):
-    # Create the matrix
+    # Create the matrix 5x5, represented as a list
     alph_matrix = []
     for char in key:
         if char not in alph_matrix:
             alph_matrix.append(char)
-    for i in range(26):
+    # This alphabet will not include ñ because it can be represented by n
+    # Iterate over the ascii values of the alphabet (26 letters, ñ not included)
+    # Not considering the letter w because it is the less used letter so it will be represented as v
+    for i in range(26): 
         char = chr(i + ord("a"))
-        if char not in alph_matrix and char != "j":
+        if char not in alph_matrix and char != "w":
             alph_matrix.append(char)
-    print(alph_matrix)
+    #print(alph_matrix)
     return alph_matrix
 
-def add_x(text):
-    # Add x to the text if needed
-    new_text = ""
-    for i in range(0, len(text), 2):
-        pair = text[i:i + 2]
-        if len(pair) == 1:
-            pair += "x"
-        new_text += pair
-    return new_text
-
-def create_pairs(text):
-    # Create the pairs
+# Function to get pairs of chars from the text
+#If the pair has two chars of the same value, an x is added
+def pairs(text):
     pairs = []
-    for i in range(0, len(text), 2):
-        pair = text[i:i + 2]
-        pairs.append(pair)
+    i=0
+    while i < len(text):
+        if i + 1 < len(text):
+            if text[i] == text[i + 1]:
+                pairs.append(text[i] + "x")
+                i += 1
+            else:
+                pairs.append(text[i] + text[i + 1])
+                i += 2
+        else:
+            pairs.append(text[i] + "x")
+            i += 1
     return pairs
 
-def cipher_pair(pair, matrix):
+def cipher(pair, list):
     # Get the positions of the characters in the matrix
-    pos1 = matrix.index(pair[0])
-    pos2 = matrix.index(pair[1])
-    # Get the row and column of each character
-    row1 = pos1 // 5
-    col1 = pos1 % 5
+    elem1 = pair[0]
+    elem2 = pair[1]
+
+    if elem1 == "ñ":
+        elem1 = "n"
+    elif elem1 == "w":
+        elem1 = "v"
+    if elem2 == "ñ":
+        elem2 = "n"
+    elif elem2 == "w":
+        elem2 = "v"
+
+    pos1 = list.index(elem1)
+    pos2 = list.index(elem2)
+
+    row1 = pos1 // 5 # Get the num row
+    col1 = pos1 % 5 #Get the num col
     row2 = pos2 // 5
     col2 = pos2 % 5
-    # Get the ciphered characters
-    if row1 == row2:
-        cipher1 = matrix[row1 * 5 + (col1 + 1) % 5]
-        cipher2 = matrix[row2 * 5 + (col2 + 1) % 5]
-    elif col1 == col2:
-        cipher1 = matrix[((row1 + 1) % 5) * 5 + col1]
-        cipher2 = matrix[((row2 + 1) % 5) * 5 + col2]
-    else:
-        cipher1 = matrix[row1 * 5 + col2]
-        cipher2 = matrix[row2 * 5 + col1]
+
+    if row1 == row2: # If the characters are in the same row, the character to the right is taken
+        cipher1 = list[row1 * 5 + (col1 + 1) % 5]
+        cipher2 = list[row2 * 5 + (col2 + 1) % 5]
+    elif col1 == col2: # If the characters are in the same column, the character below is taken
+        cipher1 = list[((row1 + 1) % 5) * 5 + col1]
+        cipher2 = list[((row2 + 1) % 5) * 5 + col2]
+    else: # If the characters are in different rows and columns, the characters are exchanged
+        cipher1 = list[row1 * 5 + col2]
+        cipher2 = list[row2 * 5 + col1]
     return cipher1 + cipher2
 
 ##### Clean text ############################
@@ -77,10 +90,12 @@ def remove_accents(text):
     return text
 
 def clean_text(text):
-    # Remove the special characters
-    text = re.sub(r"[^a-zA-ZñÑ]", "", text)
     # Convert the text to lowercase
     text = text.lower()
+    # Remove the special characters
+    text = re.sub(r"[^a-zñáéíóú]", "", text)
+    print(text)
+    
     # Remove the accents
     text = remove_accents(text)
     return text
@@ -90,8 +105,11 @@ def clean_text(text):
 
 if __name__ == "__main__":
     # Read the text from the file
-    with open("Texto1.txt", "r", encoding='latin-1') as file: 
+    with open("Texto1.txt", "r", encoding='utf') as file: 
         text = file.read()
 
     text = clean_text(text)
-    matrix = alph_matrix("criptografia")
+    #matrix = alph_matrix("criptografia")
+    print("Original\n", text, "\n")
+    print(pairs(text))
+    print("Encrypted\n", playfair(text, "criptografia"), "\n")
