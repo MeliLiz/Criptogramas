@@ -47,7 +47,7 @@ def pairs(text):
             i += 1
     return pairs
 
-def cipher(pair, list):
+def cipher(pair, list): # The list is the matrix
     # Get the positions of the characters in the matrix
     elem1 = pair[0]
     elem2 = pair[1]
@@ -69,6 +69,10 @@ def cipher(pair, list):
     row2 = pos2 // 5
     col2 = pos2 % 5
 
+    #As we are working with a list
+    #row * 5 gets us to the position of the row
+    #sum the row so that we are in the position of the char
+    #% 5 to get the column, because the matrix should be ciclic
     if row1 == row2: # If the characters are in the same row, the character to the right is taken
         cipher1 = list[row1 * 5 + (col1 + 1) % 5]
         cipher2 = list[row2 * 5 + (col2 + 1) % 5]
@@ -112,4 +116,5 @@ if __name__ == "__main__":
     #matrix = alph_matrix("criptografia")
     print("Original\n", text, "\n")
     print(pairs(text))
+    print(pairs("hello"))
     print("Encrypted\n", playfair(text, "criptografia"), "\n")
