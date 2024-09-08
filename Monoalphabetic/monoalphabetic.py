@@ -77,7 +77,7 @@ def clean_text(text):
     # Convert the text to lowercase
     text = text.lower()
     # Remove the special characters
-    text = re.sub(r"[^a-zñáéíóú]", "", text)
+    text = re.sub(r"[^a-záéíóú]", "", text)
     #print(text)
     
     # Remove the accents
@@ -85,6 +85,40 @@ def clean_text(text):
     return text
 
 #############################################
+
+# Function to find the alpha and beta using an queation system
+# First we say that z originally is an l and l is an a
+# 
+def find_alpha_beta(val, sup1, val2, sup2): 
+    diff_val = val - val2
+    diff_sup = sup1 - sup2
+    inverse = [x for x in range(26) if (x * diff_sup) % 26 == 1]
+    
+    if len(inverse) == 0:
+        print("There is no inverse")
+        return None
+    
+    alpha = diff_val * inverse[0] % 26
+    beta = (val2 - (alpha * sup2)) % 26
+    
+    return alpha, beta
+
+
+def substitute_text(text, alpha, beta):
+    new_text = []
+    for letter in text:
+        a_val = ord('a')
+        letter_val = ord(letter.lower()) - a_val 
+        # original * alpha + beta =  encrypted mod 26
+        # original = (encrypted - beta) * alpha^-1 mod 26
+        inverse = [x for x in range(26) if (x * alpha) % 26 == 1]
+        original = chr(((letter_val - beta) * inverse[0] % 26) + a_val)
+        new_text.append(original)
+            
+    return "".join(new_text)
+
+    
+    
     
 
 if __name__ == "__main__":
@@ -99,19 +133,33 @@ if __name__ == "__main__":
     print("Text:\n", text, "\n")
     #print(sort_letters(text))
     
-    freq_ordered_letters_ = ['e', 'a', 'o', 's', 'r', 'n', 'i', 'd', 'l', 'c', 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k', 'w']
-    freq_ordered_letters_1 = ['e', BLUE+'a'+END , 'o', 's', 'r', 'n', 'i', 'd', BLUE+'l'+END, 'c', 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k', 'w']
-
-    #    freq_ordered_letters_1 = ['o', BLUE+'a'+END , 'n', BLUE+'e'+END, 'r', 's', 'i', 'c', BLUE+'l'+END, BLUE+'d'+END, 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k', 'w']
-    #freq_ordered_letters_1 = ['e', 'o', 'n', 'a', 'r', 's', 'i', 'd', 'l', 'c', 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k', 'w']
-
-    #freq_ordered_letters_2 = ['a', 's', 'e', 'o', 'i', 'n', 'r', 'l', 'c', 't', 'd', 'm', 'u', 'p', 'y', 'v', 'h', 'f', 'b', 'g', 'q', 'z', 'j', 'x', 'k', 'w']
-
+    freq_ordered_letters_1 = ['e', BLUE+'a'+END, 'o', 's', 'r', 'n', 'i', 'd', BLUE+'l'+END, 'c', 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k']
     print(sustitute_text(text.lower(), freq_ordered_letters_1))
 
+    
     """repeated = repeated_substrings(text)
     for key in repeated:
         print(key, repeated[key][0])"""
+    
+    """for i in range(1, 26):
+        for j in range(1, 26):
+            try:
+                alpha, beta = find_alpha_beta(0, i, 1, j)
+                print(alpha, beta)
+                found = substitute_text(text, alpha, beta)
+                print(found)
+                print("\n\n")
+            except:
+                pass"""
+
+    
+    """
+    alpha, beta = find_alpha_beta(25, 11, 11, 0)
+    print(alpha, beta)
+    found = substitute_text(text, alpha, beta)
+    print(found)"""
+
+
 
 
     
