@@ -1,67 +1,35 @@
 import re
 
-# Given two letters with their encription, this program will find the key matrix
-def keys(a, c, res, b, d, res2):
-    list = [(x,y) for x in range(26) for y in range(26) if (a*x + c*y) % 26 == res] #Contains the possible values of a and c
-    list2 = [(x,y) for x in range(26) for y in range(26) if (b*x + d*y) % 26 == res2] #Contains the possible values of b and d
+# Get all the possible matrix keys invertible mod 26
+def get_invertible_keys():
     keys = []
-    for a, c in list:
-        for b, d in list2:
-            keys.append((a, b, c, d))
-    print(keys)
+    for i in range(26):
+        for j in range(26):
+            for k in range(26):
+                for l in range(26):
+                    if gcd(i*l - j*k, 26) == 1:
+                        keys.append([i, j, k, l])
     return keys
 
-def keys_1(a, b, res, c, d, res2):
-    list = [(x,y) for x in range(26) for y in range(26) if (a*x + b*y) % 26 == res] #Contains the possible values of a and c
-    list2 = [(x,y) for x in range(26) for y in range(26) if (c*x + d*y) % 26 == res2] #Contains the possible values of b and d
-    keys = []
-    for a, b in list:
-        for c, d in list2:
-            keys.append((a, b, c, d))
-    return keys
-
-def keys_2():
-    keys = []
-    for a in range(26):
-        for b in range(26):
-            for c in range(26):
-                for d in range(26):
-                    keys.append((a, b, c, d))
-    return keys
-
+# Get the gcd of two numbers
 def gcd(a, b):
-    while b != 0:
+    while b:
         a, b = b, a % b
     return a
 
-def get_bigrams(text):
-    bigrams = []
-    for i in range(len(text)-1):
-        bigrams.append(text[i:i+2])
-    return bigrams
+# Get the digrams of a text
+def get_digram(text):
+    digrams = []
+    for i in range(0, len(text), 2):
+        digrams.append(text[i:i+2])
+    return digrams
 
-def get_numbers(bigrams):
-    numbers = []
-    for bigram in bigrams:
-        numbers.append([ord(bigram[0])-97, ord(bigram[1])-97])
-    return numbers
-
-# Test cases
-def Hill_decrypt(text):
-    numbers = get_numbers(get_bigrams(text))
-    k = keys_2()
-    for key in k:
-        new = []
-        for bigram in numbers:
-            a, b = bigram
-            x = (key[0]*a + key[1]*b) % 26
-            y = (key[2]*a + key[3]*b) % 26
-            new.append([x+97, y+97])
-        if new[2][0] == 4 and new[len(new)-1][1] == 18:
-            print(key)
-            print(new)
-            break
-#keys(18, 7, 4, 18, 11, 18)
+def get_number_digrams(text):
+    digrams = get_digram(text)
+    number_digrams = []
+    for digram in digrams:
+        number_digrams.append([ord(digram[0])-97, ord(digram[1])-97])
+    return number_digrams
 
 ##### Clean text ############################
 
@@ -77,17 +45,47 @@ def clean_text(text):
     text = text.lower()
     # Remove the special characters
     text = re.sub(r"[^a-záéíóú]", "", text)
-    #print(text)
     
     # Remove the accents
     text = remove_accents(text)
+    
+    # Ensure even number of characters
+    if len(text) % 2 != 0:
+        text += 'x'  # Add 'x' as padding if needed
     return text
 
 #############################################
 
+# Multiply a key by a digram
+def multiply_key_digram(key, digram):
+    a = key[0]*digram[0] + key[2]*digram[1]
+    b = key[1]*digram[0] + key[3]*digram[1]
+    return [a % 26, b % 26]
+
+# Try every key on every digram
+def decipher(text):
+    keys = get_invertible_keys()  # Get all invertible keys
+    digrams = get_number_digrams(text)  # Get digrams from the text
+
+    for key in keys:
+        res1 = []
+        for digram in digrams:
+            res = multiply_key_digram(key, digram)
+            res1.append([chr(i + 97) for i in res])  # Convert numbers back to letters
+        
+        # Join the result into a single string
+        res1 = "".join(["".join(i) for i in res1])
+        
+        # Check if the fifth and last positions match the given letters
+        if res1[-1] == "s" and res1[4] == "e" and 'w' not in res1:  # -1 is last, 4 is fifth
+            print("Key:", key)
+            print("Decrypted text:", res1)
+            print("\n")
+
 if __name__ == "__main__":
     with open("Criptograma_5.txt", "r") as file:
         text = file.read()
-    text = clean_text(text)
-    Hill_decrypt(text)
+    
+    text = clean_text(text)  # Clean the text
 
+    decipher(text)  # Attempt to decipher with all keys
