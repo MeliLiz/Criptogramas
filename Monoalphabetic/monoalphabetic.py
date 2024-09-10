@@ -12,10 +12,13 @@ def gcd(a, b):
 # Find the possible texts that can be decrypted
 def find_possible_texts(text):
     possible_a = [x for x in range(26) if gcd(x, 26)==1] # List of possible values for a, values that have inverse modulo 26
+    cont = 0
     for b in range(26):
         for a in possible_a:
             decripted = decrypt(text, a, b)
             print(f"a = {a}, b = {b}: {decripted} \n")
+            cont += 1
+    print(cont)
 
 def decrypt(text, a, b):
     new = []
@@ -25,6 +28,18 @@ def decrypt(text, a, b):
         new.append(chr(((a_inverse*(letter-b)) % 26 ) + 97))
     return "".join(new)
 
+# Change the text given the alpha and beta
+def decrypt_text(text, alpha, beta):
+    new = []
+    a_val = ord('a')
+    for letter in text:
+        letter_val = ord(letter) - a_val 
+        inverse = [x for x in range(26) if (x * alpha) % 26 == 1]
+        rest = (letter_val - beta) % 26
+        original = chr((rest * inverse[0] % 26) + a_val)
+        new.append(original)
+            
+    return "".join(new)
 
 
 
@@ -59,6 +74,8 @@ if __name__ == "__main__":
         criptograma = file.read()
     
     text = clean_text(criptograma)
+
     # print(text)
-    find_possible_texts(text)
+    #find_possible_texts(text)
+    print(decrypt_text(text, 3, 11))
    

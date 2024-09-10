@@ -125,41 +125,22 @@ if __name__ == "__main__":
 
     BLUE = '\033[94m'
     END = '\033[0m'
+    GREEN = '\033[92m'
+    PURPLE = '\033[95m'
+    CYAN = '\033[96m'
     
     with open("Criptograma3.txt", "r") as file:
         criptograma = file.read()
     
     text = clean_text(criptograma)
     print("Text:\n", text, "\n")
-    #print(sort_letters(text))
     
     freq_ordered_letters = ['e', BLUE+'a'+END, 'o', 's', 'r', 'n', 'i', 'd', BLUE+'l'+END, 'c', 't', 'u', 'm', 'p', 'b', 'g', 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k']
-    freq_ordered_letters_1 = [BLUE+'e'+END, 'a', BLUE+'s'+END, 'i', 't', 'n', 'o', 'd', 'p', 'c', 'r', 'y', 'm', 'l', 'b', 'g', 'u', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k']
+    #freq_ordered_letters_1 = [BLUE+'a'+END, 'e', 'o', 's', 'r', 't', 'i', 'd', 'c', 'l', BLUE+'n'+END, 'u', 'm', 'p', 'b', BLUE+'g'+END, 'y', 'v', 'q', 'h', 'f', 'z', 'j', 'x', 'k']
+    freq_ordered_letters_1 = [BLUE+'e'+END, BLUE+'a'+END, BLUE+'n'+END, BLUE+'i'+END, BLUE+'o'+END, BLUE+'s'+END, PURPLE+'r'+END, GREEN+'t'+END, BLUE+'c'+END, PURPLE+'d'+END, PURPLE+'l'+END, PURPLE+'u'+END, GREEN+'p'+END, CYAN+'m'+END, PURPLE+'v'+END, PURPLE+'g'+END, PURPLE+'b'+END, CYAN+'f'+END, 'z', PURPLE+'q'+END, 'h', PURPLE+'j'+END, CYAN+'y'+END, 'x', 'k']
 
     print(sustitute_text(text.lower(), freq_ordered_letters_1))
 
-    
-    """repeated = repeated_substrings(text)
-    for key in repeated:
-        print(key, repeated[key][0])"""
-    
-    """for i in range(1, 26):
-        for j in range(1, 26):
-            try:
-                alpha, beta = find_alpha_beta(0, i, 1, j)
-                print(alpha, beta)
-                found = substitute_text(text, alpha, beta)
-                print(found)
-                print("\n\n")
-            except:
-                pass"""
-
-    
-    """
-    alpha, beta = find_alpha_beta(25, 11, 11, 0)
-    print(alpha, beta)
-    found = substitute_text(text, alpha, beta)
-    print(found)"""
 
 
 
