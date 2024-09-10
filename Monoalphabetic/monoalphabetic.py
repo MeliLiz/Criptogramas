@@ -22,7 +22,7 @@ def decrypt(text, a, b):
     a_inverse = [x for x in range(26) if (a * x) % 26 == 1][0] # Find the inverse of a modulo 26
     for letter in text:
         letter = ord(letter) - 97
-        new.append(chr(((a*(letter-b)) % 26 ) + 97))
+        new.append(chr(((a_inverse*(letter-b)) % 26 ) + 97))
     return "".join(new)
 
 
