@@ -49,7 +49,7 @@ def assign_bigrams(frequency):
                        "ap", "it", "ep", "su", "so", "ol", "eg", "ns", "ea", BLUE+"tu"+END, "pu", "sc", "at", "cu", "ee", "ob", "ce", "et", "lo", 'oa']
     big = [a+b for a in letters for b in letters]
     missing = [bigram for bigram in big if bigram not in spanish_bigrams]
-    print("Missing: ",  missing, "\n")
+    #print("Missing: ",  missing, "\n")
 
     #Order the bigrams by frequency
     frequency = dict(sorted(frequency.items(), key=lambda item: item[1], reverse=True))
@@ -82,6 +82,44 @@ def substitute_bigram(text, bigram, new_bigram):
             new_text.append(text[i])
     return new_text
 
+def decrypt_playfair(text, key): # The key is a string with the 25 letters of the key
+    # Create the matrix
+    matrix = []
+    for i in range(5):
+        row = []
+        for j in range(5):
+            row.append(key[i*5 + j])
+        matrix.append(row)
+    print(matrix)
+
+    # Get the bigrams
+    bigrams = get_bigrams(text)
+    #print(bigrams)
+
+    # Decrypt the text
+    new_text = []
+    for bigram in bigrams:
+        row1, col1 = divmod(key.index(bigram[0]), 5)
+        row2, col2 = divmod(key.index(bigram[1]), 5)
+        if row1 == row2:
+            new_text.append(matrix[row1][(col1 - 1) % 5] + matrix[row2][(col2 - 1) % 5])
+        elif col1 == col2:
+            new_text.append(matrix[(row1 - 1) % 5][col1] + matrix[(row2 - 1) % 5][col2])
+        else:
+            new_text.append(matrix[row1][col2] + matrix[row2][col1])
+    print(new_text)
+    return "".join(new_text)
+
+def color_elems(bigrams,list, color):
+    new_list = []
+    for bigram in bigrams:
+        if bigram in list:
+            new_list.append(color + bigram + END)
+        else:
+            new_list.append(bigram)
+
+    return "".join(new_list)
+
 
 
 if __name__ == "__main__":
@@ -92,13 +130,27 @@ if __name__ == "__main__":
     END = '\033[0m'
     text = clean_text(criptograma)
     bigrams = get_bigrams(text)
-    frequency = get_frequency(bigrams)
+    #frequency = get_frequency(bigrams)
     #print(frequency, "\n")
-    assigned, assigned2 = assign_bigrams(frequency)
-    subst = substitute_text(text, assigned)
-    subst1 = substitute_bigram(subst, "jo", BLUE +"pi"+ END)
-    subst3 = substitute_bigram(subst1, "os", BLUE +"lo"+ END)
-    subst4 = substitute_bigram(subst3, "sl", BLUE +"tr"+ END)
-    subst5 = substitute_bigram(subst4, "er", BLUE +"es"+ END)
-    #print(subst5)
-    #print("".join(subst5))
+    #assigned, assigned2 = assign_bigrams(frequency)
+    #subst = substitute_text(text, assigned)
+    #print(bigrams)
+    """
+    subst1 = substitute_bigram(bigrams, "nm", BLUE +"ca"+ END)
+    subst3 = substitute_bigram(subst1, "jo", BLUE +"pi"+ END)
+    subst4 = substitute_bigram(subst3, "ux", BLUE +"tu"+ END)
+    subst5 = substitute_bigram(subst4, "nl", BLUE +"lo"+ END)
+    subst6 = substitute_bigram(subst5, "gn", BLUE +"el"+ END)
+    subst7 = substitute_bigram(subst6, "cy", BLUE +"ox"+ END)
+    subst8 = substitute_bigram(subst7, "sl", BLUE +"tr"+ END)
+    subst9 = substitute_bigram(subst8, "fb", BLUE +"es"+ END)
+    print("".join(subst9))"""
+
+    #key = "bdrzfiolncjpgehkytuxvqsam"
+    key = "fhramiolncjpgetbdkquvyzsx"
+    decrypted = decrypt_playfair(text, key)
+    decr_bigr = get_bigrams(decrypted)
+    decrypted = color_elems(decr_bigr,['ca', 'pi', 'tu', 'lo', 'ox', 'el'], BLUE)
+
+
+    print("".join(decrypted))
