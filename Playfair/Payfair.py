@@ -130,10 +130,11 @@ if __name__ == "__main__":
     END = '\033[0m'
     text = clean_text(criptograma)
     bigrams = get_bigrams(text)
-    #frequency = get_frequency(bigrams)
+    frequency = get_frequency(bigrams)
     #print(frequency, "\n")
-    #assigned, assigned2 = assign_bigrams(frequency)
-    #subst = substitute_text(text, assigned)
+    assigned, assigned2 = assign_bigrams(frequency)
+    subst = substitute_text(text, assigned)
+    print("".join(subst))
     #print(bigrams)
     """
     subst1 = substitute_bigram(bigrams, "nm", BLUE +"ca"+ END)
@@ -145,7 +146,7 @@ if __name__ == "__main__":
     subst8 = substitute_bigram(subst7, "sl", BLUE +"tr"+ END)
     subst9 = substitute_bigram(subst8, "fb", BLUE +"es"+ END)
     print("".join(subst9))"""
-
+    """
     #key = "bdrzfiolncjpgehkytuxvqsam"
     #key = "fhramiolncjpgetbdkquvyzsx"
     key = "fhramiolncjpgetbdkquvyzsx"
@@ -154,4 +155,4 @@ if __name__ == "__main__":
     decrypted = color_elems(decr_bigr,['ca', 'pi', 'tu', 'lo', 'ox', 'el'], BLUE)
 
 
-    print("".join(decrypted))
+    print("".join(decrypted))"""

@@ -54,25 +54,25 @@ def obtener_permutaciones(cadena):
             continue
 
     print(cont)
+
+def permut(str):
+    # Get all the permutations of the string
+    permus = permutations(str)
+    for p in permus:
+        print(p)
         
 
-# Ejemplo de uso
-cadena = "abcdefghijklmnopqrstuvxyz"
-permutaciones = obtener_permutaciones(cadena)
+#cadena = "abcdefghijklmnopqrstuvxyz"
+#permutaciones = obtener_permutaciones(cadena)
 #print(permutaciones)
 
 
-
-# Bleak playfair cipher
-def break_playfair(text):
-    #Get th possible keys
-    alphabet = "abcdefghijklmnopqrstuvxyz" # not including the letter 'w'
-    keys = []
-    for i in range(25):
-        print(i)
 
 if __name__ == "__main__":
     with open("Criptograma6.txt", "r") as file:
         criptograma = file.read()
 
     text = clean_text(criptograma)
+
+    p = permut("bdfhkqvrsz")
+    
