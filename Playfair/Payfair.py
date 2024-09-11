@@ -147,6 +147,7 @@ if __name__ == "__main__":
     print("".join(subst9))"""
 
     #key = "bdrzfiolncjpgehkytuxvqsam"
+    #key = "fhramiolncjpgetbdkquvyzsx"
     key = "fhramiolncjpgetbdkquvyzsx"
     decrypted = decrypt_playfair(text, key)
     decr_bigr = get_bigrams(decrypted)
